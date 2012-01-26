@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>analysis1</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-01-26 01:53:07 EST"/>
+<meta name="author" content="aditya"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">analysis1</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Milestone 1 Winners </a>
+<ul>
+<li><a href="#sec-1.1">1.1 Data Manipulation </a></li>
+<li><a href="#sec-1.2">1.2 Model Building </a></li>
+<li><a href="#sec-1.3">1.3 Techniques Used </a></li>
+<li><a href="#sec-1.4">1.4 Predictive Modelling </a></li>
+<li><a href="#sec-1.5">1.5 Ensembling </a></li>
+<li><a href="#sec-1.6">1.6 Future Proofing </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Milestone 1 Winners </h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+</div>
+
+<div id="outline-container-1.1" class="outline-3">
+<h3 id="sec-1.1"><span class="section-number-3">1.1</span> Data Manipulation </h3>
+<div class="outline-text-3" id="text-1.1">
+
+
+
+<ul>
+<li>
+ The claim level data has to be aggregated since there could be multiple record per patient. 
+</li>
+<li>
+ Data from 2 continous year has been provided to create the models.
+</li>
+<li>
+ 2 distinct Modelling data sets were generated. For the first dataset each year data was counted as a separate record. In the second dataset these records were aggregated (Longer claim history, no recency)
+
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.2" class="outline-3">
+<h3 id="sec-1.2"><span class="section-number-3">1.2</span> Model Building </h3>
+<div class="outline-text-3" id="text-1.2">
+
+<p>The objective function for the model is to minimize 
+</p>
+<p>
+\sqrt{1/n&sum;\limits<sub>i</sub><sup>n</sup> [log(pred<sub>i</sub> + 1) - log(act<sub>i</sub> + 1)]}}
+</p>
+<p>
+where 
+</p><ol>
+<li>
+i is a member
+</li>
+<li>
+n is the total number of members
+</li>
+<li>
+pred is the predicted number of days spent in hospital for member i in the test period
+</li>
+<li>
+act is the actual number of days spent in hospital for member i in the test period
+
+</li>
+</ol>
+
+<p>Now we can conver this minimisation function by transforming the actual number of days spent 
+in hospital to the log scale
+</p>
+<p>
+actl<sub>i</sub> = log(act<sub>i</sub> + 1)
+Therefore the objective function transforms to
+\sqrt{1/n &sum;\limits<sub>i</sub><sup>n[</sup>(predl<sub>i</sub>) - (actl<sub>i</sub>)]<sup>2</sup>}
+</p>
+<p>
+which is RMSE. 
+While submitting the predicted values, reverse transformation is done by 
+pred<sub>submit</sub><sub>i</sub> = exp(predl<sub>i</sub>) - 1
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-1.3" class="outline-3">
+<h3 id="sec-1.3"><span class="section-number-3">1.3</span> Techniques Used </h3>
+<div class="outline-text-3" id="text-1.3">
+
+
+<p>
+Four underlying algorithms were used, all of which are freely available in the R language
+</p>
+<ul>
+<li>
+Gradient Boosting Machines <a href="http://www-stat.stanford.edu/~jhf/ftp/trebst.pdf">GBM Paper</a> <a href="http://cran.r-project.org/web/packages/gbm/index.html">R package</a> (TODO)
+</li>
+<li>
+Neural Networks 
+</li>
+<li>
+Bagged Trees 
+</li>
+<li>
+Liner Models
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col align="left" /><col align="right" />
+</colgroup>
+<tbody>
+<tr><td>Algorithm</td><td>Error</td></tr>
+<tr><td>GBM</td><td>0.460</td></tr>
+<tr><td>Bagged Trees + Neural Network Ensemble</td><td>0.463</td></tr>
+<tr><td>Linear Regression</td><td>0.466</td></tr>
+</tbody>
+</table>
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.4" class="outline-3">
+<h3 id="sec-1.4"><span class="section-number-3">1.4</span> Predictive Modelling </h3>
+<div class="outline-text-3" id="text-1.4">
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5" class="outline-3">
+<h3 id="sec-1.5"><span class="section-number-3">1.5</span> Ensembling </h3>
+<div class="outline-text-3" id="text-1.5">
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1.6" class="outline-3">
+<h3 id="sec-1.6"><span class="section-number-3">1.6</span> Future Proofing </h3>
+<div class="outline-text-3" id="text-1.6">
+
+
+
+
+</div>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: aditya
+<a href="mailto:aditya@aditya-ThinkPad-SL410">&lt;aditya@aditya-ThinkPad-SL410&gt;</a>
+</p>
+<p class="date"> Date: 2012-01-26 01:53:07 EST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
